@@ -1,10 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="//unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@3/swagger-ui.css" >
 </head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<div id="swagger-ui"></div>
+<script src="https://unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+<script src="https://unpkg.com/swagger-ui-dist@3/swagger-ui-standalone-preset.js"> </script>
+<script>
+    function getQueryStringValue (key) {  
+        return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+    }  
+    console.log(getQueryStringValue("url")); 
+    window.onload = function() {
+        // Build a system
+        const ui = SwaggerUIBundle({
+        url: "https://petstore.swagger.io/v2/swagger.json",
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        validatorUrl: null,
+        presets: [
+            SwaggerUIBundle.presets.apis,
+            SwaggerUIStandalonePreset
+        ],
+        plugins: [
+            SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
+        })
+
+        window.ui = ui
+    }
+    </script>
 </body>
 </html>
